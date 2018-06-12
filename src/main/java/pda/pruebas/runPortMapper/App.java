@@ -45,8 +45,9 @@ public class App {
 
 		// Refresh mapping half-way through the lifetime of the mapping (for example,
 		// if the mapping is available for 40 seconds, refresh it every 20 seconds)
-		while(!shutdown) {
-		    mappedPort = mapper.refreshPort(mappedPort, mappedPort.getLifetime() / 2L);
+		long lt;
+		while(!shutdown && (lt=mappedPort.getLifetime())>0) {
+		    mappedPort = mapper.refreshPort(mappedPort, lt / 2L);
 		    System.out.println("Port mapping refreshed: " + mappedPort);
 		    Thread.sleep(mappedPort.getLifetime() * 1000L);
 		}
